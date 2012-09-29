@@ -2,6 +2,8 @@
 bin
 obj
 *\Library\*
-
+*/Library/*
+bob\Temp\*
+bob/Temp/*
 # mstest test results
 TestResults
