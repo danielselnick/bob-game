@@ -13,6 +13,8 @@ public class CharacterMovement : MonoBehaviour {
 	const int FORWARD = 1;
 	const int BACKWARD = 0;
 	
+	private bool isGrounded;
+	
 	private Rigidbody playerRigidbody;
 	
 	private Transform playerTransform;
@@ -29,14 +31,16 @@ public class CharacterMovement : MonoBehaviour {
 		
 		moveDirection = new Vector3();
 		playerTransform = this.GetComponent<Transform>();
+		
 		timePassed = 0;
+		isGrounded = true;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		if(controller.isGrounded)
+		if(isGrounded)
 		{
 			
 			moveDirection.x = Input.GetAxis("Horizontal");
@@ -70,6 +74,6 @@ public class CharacterMovement : MonoBehaviour {
 			moveDirection.x *= speed;
 		}
 		moveDirection.y -= gravity * Time.deltaTime;
-		controller.Move (moveDirection*Time.deltaTime);
+		playerRigidbody.AddForce(moveDirection);
 	}
 }
