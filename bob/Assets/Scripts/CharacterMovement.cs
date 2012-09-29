@@ -30,8 +30,8 @@ public class CharacterMovement : MonoBehaviour {
 	void Start () {
 		
 		moveDirection = new Vector3();
-		playerTransform = this.GetComponent<Transform>();
-		
+		playerTransform = GetComponent<Transform>();
+		playerRigidbody = GetComponent<Rigidbody>();
 		timePassed = 0;
 		isGrounded = true;
 
@@ -65,6 +65,7 @@ public class CharacterMovement : MonoBehaviour {
 			if(Input.GetButton("Jump"))
 			{
 				moveDirection.y = jumpSpeed;
+				isGrounded = false;
 			}		
 		}
 		else
@@ -74,6 +75,7 @@ public class CharacterMovement : MonoBehaviour {
 			moveDirection.x *= speed;
 		}
 		moveDirection.y -= gravity * Time.deltaTime;
+
 		playerRigidbody.AddForce(moveDirection);
 	}
 }
