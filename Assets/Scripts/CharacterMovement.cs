@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour
 	
 	private List<GameObject> _collisionObjects;
 	private float _timeSinceLastJump;
+	private float _rotationY;
 	
 	// Use this for initialization
 	void Start () 
@@ -33,6 +34,15 @@ public class CharacterMovement : MonoBehaviour
 		_collisionObjects.Remove(collisionInfo.gameObject);
 	}
 
+	// Update is called once per frame
+	void Update ()
+	{
+		HandleJumpAction();
+		HandleHorizontalMovement();
+		PlayerCamera.transform.position 
+			= new Vector3(transform.position.x, transform.position.y + 2, PlayerCamera.transform.position.z);
+	}
+	
 	void HandleHorizontalMovement ()
 	{
 		if(rigidbody.velocity.magnitude > MaximumVelocityMagnitude)
@@ -51,17 +61,18 @@ public class CharacterMovement : MonoBehaviour
 		{
 			acceleration = InAirAcceleration;
 		}
+		
+		if(horizontalInput > 0.01)
+		{
+			_rotationY = 90;
+		}
+		else if(horizontalInput < -0.01)
+		{
+			_rotationY = 270;
+		}
+		rigidbody.MoveRotation(Quaternion.Euler(0, _rotationY, 0));
 		var force = new Vector3(horizontalInput * acceleration, 0, 0);
 		rigidbody.AddForce(force);
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		HandleJumpAction();
-		HandleHorizontalMovement();
-		PlayerCamera.transform.position 
-			= new Vector3(transform.position.x, transform.position.y, PlayerCamera.transform.position.z);
 	}
 	
 	private void HandleJumpAction()
