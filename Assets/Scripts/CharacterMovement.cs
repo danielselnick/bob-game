@@ -43,6 +43,23 @@ public class CharacterMovement : MonoBehaviour
 		PlayerCamera.transform.position = new Vector3(transform.position.x + PlayerCameraOffset.x,
 													  transform.position.y + PlayerCameraOffset.y,
 													  transform.position.z + PlayerCameraOffset.z);
+		if(rigidbody.velocity.magnitude > 1)
+		{
+			if(animation != null)
+			{
+				if(!animation.isPlaying)
+				{
+					animation.Play(AnimationPlayMode.Mix);
+				}
+			}
+		}
+		else
+		{
+			if(animation != null)
+			{
+				animation.Stop();
+			}
+		}
 	}
 	
 	void HandleHorizontalMovement ()
