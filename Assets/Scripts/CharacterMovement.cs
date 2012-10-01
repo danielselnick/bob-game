@@ -10,6 +10,7 @@ public class CharacterMovement : MonoBehaviour
 	public float MaximumVelocityMagnitude = 10f;
 	public float JumpCoolDown = 2f;
 	public Camera PlayerCamera;
+	public Vector3 PlayerCameraOffset = new Vector3(0, 3, 3);
 	
 	private List<GameObject> _collisionObjects;
 	private float _timeSinceLastJump;
@@ -39,8 +40,9 @@ public class CharacterMovement : MonoBehaviour
 	{
 		HandleJumpAction();
 		HandleHorizontalMovement();
-		PlayerCamera.transform.position 
-			= new Vector3(transform.position.x, transform.position.y + 2, PlayerCamera.transform.position.z);
+		PlayerCamera.transform.position = new Vector3(transform.position.x + PlayerCameraOffset.x,
+													  transform.position.y + PlayerCameraOffset.y,
+													  transform.position.z + PlayerCameraOffset.z);
 	}
 	
 	void HandleHorizontalMovement ()
